@@ -14,7 +14,6 @@ function Login() {
 
 const [loginUser] = useMutation(LOGIN_USER_MUTATION);
 const {refetch: refetch} = useQuery(CURRENT_USER)
-
 const [values, setValues] = useState(initialValues);
 
 const handleInputChange = (e) => {
