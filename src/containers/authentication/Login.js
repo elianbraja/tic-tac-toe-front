@@ -12,8 +12,8 @@ function Login() {
     password: ""
   };
 
-const [loginUser, { data }] = useMutation(LOGIN_USER_MUTATION);
-const {data:current_user, refetch} = useQuery(CURRENT_USER)
+const [loginUser] = useMutation(LOGIN_USER_MUTATION);
+const {refetch: refetch} = useQuery(CURRENT_USER)
 
 const [values, setValues] = useState(initialValues);
 
@@ -24,6 +24,12 @@ const handleInputChange = (e) => {
       [name]: value,
     });
   };
+
+  function stateChange() {
+    setTimeout(function () {
+        history.push('/playground');
+    }, 500);
+}
 
   return (
     <div>
@@ -36,7 +42,8 @@ const handleInputChange = (e) => {
               result => {
                 const token = result.data.loginUser.token;
                 localStorage.setItem("token", token);
-                history.push('/playground', result.data.loginUser)
+                refetch()
+                stateChange()
               },
             ).catch(
               error => {

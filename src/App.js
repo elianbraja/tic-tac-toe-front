@@ -6,18 +6,20 @@ import PrivateRoute from './PrivateRoute'
 import Login from './containers/authentication/Login';
 import Signup from './containers/authentication/Signup';
 import Playground from './containers/playground/Playground'
-import currentUserQuery from './queries/user/CurrentUser'
-import { graphql } from 'react-apollo';
+import CURRENT_USER from './queries/user/CurrentUser'
+import { useQuery } from '@apollo/react-hooks';
 
-function App({ data: { loading, error, currentUser }}){
+
+function App(){
+  const {data:current_user, loading: loading} = useQuery(CURRENT_USER)
   return (
     <BrowserRouter>
-      <Header/>
+      <Header user={current_user}/>
       {!loading ?
         <Switch>
           <Route path="/login" component={Login}/>
           <Route path="/signup" component={Signup}/>
-          <PrivateRoute path="/playground" exact component={Playground} user={currentUser}/>
+          <PrivateRoute path="/playground" exact component={Playground} user={current_user}/>
           <Redirect from="/" to="/playground" />
         </Switch>
         :
@@ -26,4 +28,4 @@ function App({ data: { loading, error, currentUser }}){
   );
 }
 
-export default graphql(currentUserQuery)(App);
+export default App;

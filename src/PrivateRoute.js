@@ -1,20 +1,26 @@
 // PrivateRoute.js
-import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import CURRENT_USER from './queries/user/CurrentUser'
+import { useQuery } from '@apollo/react-hooks';
 
 
-const PrivateRoute = ({ component: Component, user, ...rest }) =>{
-let current_user = user || rest.location.state
+const PrivateRoute = ({ component: Component, ...rest }) =>{
+const {loading: loading, data: data} = useQuery(CURRENT_USER)
 return(
+  <div>
+  {!loading ?
   <Route
     {...rest}
     render={props =>
-      current_user ?
-      <Component currentUser={current_user} {...props} />
+      data ?
+      <Component {...props}/>
       :
       <Redirect to={{pathname: '/login'}}/>
     }
   />
+  :
+  null}
+  </div>
 )};
 
 export default PrivateRoute;
