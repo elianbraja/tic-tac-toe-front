@@ -9,10 +9,9 @@ function Heading(props) {
             <input
               value={null}
               type="text"
-              name="code"
               placeholder="code"
             />
-            <input type="submit" name="" value="Connect" href="#"/>
+            <input type="submit" value="Connect" href="#"/>
       </form>
     </div>
   );

@@ -10,7 +10,7 @@ const [logged_out, setLoggedOut] = useState(false);
   }
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar" style={{background:"#171d25"}}>
       <a className="navbar-brand" href="/">TicTacToe</a>
       <div id="navbarNav" className="ml-auto">
         <ul className="navbar-nav">
