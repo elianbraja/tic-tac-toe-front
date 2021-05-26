@@ -15,6 +15,7 @@ function Login() {
 const [loginUser] = useMutation(LOGIN_USER_MUTATION);
 const {refetch: refetch} = useQuery(CURRENT_USER)
 const [values, setValues] = useState(initialValues);
+const [error_message, setErrorMessage] = useState(null);
 
 const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -39,19 +40,22 @@ const handleInputChange = (e) => {
             password: values.password
           }}).then(
               result => {
-                const token = result.data.loginUser.token;
-                localStorage.setItem("token", token);
-                refetch()
-                stateChange()
+                if(result.data.loginUser){
+                  const token = result.data.loginUser.token;
+                  localStorage.setItem("token", token);
+                  refetch()
+                  stateChange()
+                }
               },
             ).catch(
               error => {
-                console.log("error: " + error)
+                setErrorMessage("Email or password is incorrect")
               }
             );;;
         }} className="box">
             <h1>Login</h1>
             <p className="text-muted"> Please enter your credentials!</p>
+            <div style={{color:"#ad3030"}}>{error_message}</div>
               <input
                 value={values.email}
                 onChange={handleInputChange}
